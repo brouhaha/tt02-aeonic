@@ -3,9 +3,11 @@
 project:
   wokwi_id:    0        # If using wokwi, set this to your project's ID
   source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
-    - counter.v
-    - decoder.v
-  top_module:  "seven_segment_seconds"      # put the name of your top module here, make it unique by prepending your github username
+    - aeonic_tt.v
+    - aeonic.v
+    - spi_fram_cont.v
+    - spi_cont.v
+  top_module:  "aeonic_tt"      # put the name of your top module here, make it unique by prepending your github username
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
 # it does and how to operate it.
@@ -14,33 +16,33 @@ project:
 #
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "Matt Venn"      # Your name
-  discord:      "mattvenn#1907"      # Your discord handle
-  title:        "7 segment seconds"      # Project title
-  description:  "count up to 10, one second at a time"      # Short description of what your project does
-  how_it_works: "uses a register and some combinational logic"      # Longer description of how the project works
-  how_to_test:  "after reset, the counter should increase by one every second"      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
-  external_hw:  ""      # Describe any external hardware needed
+  author:       "Eric Smith"      # Your name
+  discord:      "brouhaha#6720"      # Your discord handle
+  title:        "Aeonic"      # Project title
+  description:  "Vertically microcoded processor using SPI FRAM"      # Short description of what your project does
+  how_it_works: "Consists of multiple state machines, an eight bit data path with a small number of registers, and an SPI flash controller."      # Longer description of how the project works
+  how_to_test:  "Connect an external SPI FRAM chip (e.g. FM25V20A) containing appropriate microcode."      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
+  external_hw:  "SPI FRAM chip (e.g. FM25V20A)"      # Describe any external hardware needed
   language:     "verilog" # other examples include Verilog, Amaranth, VHDL, etc
   doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
   clock_hz:     1000       # Clock frequency in Hz (if required)
   picture:      ""      # relative path to a picture in your repository
   inputs:               # a description of what the inputs do
-    - clock
-    - reset
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
-  outputs:
-    - segment a         # a description of what the outputs do
-    - segment b
-    - segment c
-    - segment d
-    - segment e
-    - segment f
-    - segment g
-    - none
+    - clock        # clock
+    - reset        # reset
+    - spi_miso     # data from SPI memory device
+    - gp_in[0]
+    - gp_in[1]
+    - gp_in[2]
+    - gp_in[3]
+    - gp_in[4]
+  outputs:         # a description of what the outputs do
+    - spi_nss      # SPI select, active low
+    - spi_clk      # SPI clock
+    - spi_mosi     # data to SPI memory device
+    - gp_out[0]
+    - gp_out[1]
+    - gp_out[2]
+    - gp_out[3]
+    - gp_out_stb   # general-purpose output strobe
 

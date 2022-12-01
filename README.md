@@ -1,34 +1,19 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg)
 
-# What is Tiny Tapeout?
+# Aeonic: Vertically microcoded processor using SPI FRAM memory
 
-TinyTapeout is an educational project that aims to make it easier and cheaper than ever to get your digital designs manufactured on a real chip!
+This project is a vertically microcoded processor, intended to be
+fabricated in [Tiny Tapeout 2](https://tinytapeout.com/). The
+microarchitecture is a variant of
+[Glacial](https://github.com/brouhaha/glacial), but whereas Glacial
+executed all microinstructions in four clock cycles, using FPGA
+blockram for both microcode and data storage, Aeonic takes a variable
+number of clock cycles to execute each microinstruction, due to the
+use of external serial (SPI) memory.  SPI FRAM is used because it is
+nonvolatile, like flash memory, but has not write latency, like
+SRAM. It is expected that SPI MRAM would also work.
 
-Go to https://tinytapeout.com for instructions!
-
-## How to change the Wokwi project
-
-Edit the [info.yaml](info.yaml) and change the wokwi_id to match your project.
-
-## How to enable the GitHub actions to build the ASIC files
-
-Please see the instructions for:
-
-* [Enabling GitHub Actions](https://tinytapeout.com/faq/#when-i-commit-my-change-the-gds-action-isnt-running)
-* [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
-
-## How does it work?
-
-When you edit the info.yaml to choose a different ID, the [GitHub Action](.github/workflows/gds.yaml) will fetch the digital netlist of your design from Wokwi.
-
-After that, the action uses the open source ASIC tool called [OpenLane](https://www.zerotoasiccourse.com/terminology/openlane/) to build the files needed to fabricate an ASIC.
-
-## Resources
-
-* [FAQ](https://tinytapeout.com/faq/)
-* [Digital design lessons](https://tinytapeout.com/digital_design/)
-* [Join the community](https://discord.gg/rPK2nSjxy8)
-
-## What next?
-
-* Share your GDS on Twitter, tag it [#tinytapeout](https://twitter.com/hashtag/tinytapeout?src=hashtag_click) and [link me](https://twitter.com/matthewvenn)!
+The microinstruction set is identical to that of Glacial, with the
+exception of the I/O microinstructions. See the comments in aeonic.v
+for details. The Glacial repository wiki has a PDF file documenting
+the microinstruction set.
